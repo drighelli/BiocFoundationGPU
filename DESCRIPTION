@@ -1,0 +1,10 @@
+Package: BiocFoundationGPU
+Type: Package
+Title: What the Package Does (Short Line)
+Version: 1.0
+Date: 2026-04-20
+Authors@R: c(person("Givenname", "Familyname", role = c("aut", "cre"),
+                    email = "yourfault@somewhere.net"),
+             person("Anotherone", "Ifany", role = "ctb"))
+Description: More about what it does (maybe more than one line).
+License: What license is it under?
