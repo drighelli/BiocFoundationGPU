@@ -1,10 +1,24 @@
 Package: BiocFoundationGPU
 Type: Package
-Title: What the Package Does (Short Line)
+Title: This package allows deploying a set of pre-defined foundation models for various tasks in R
 Version: 1.0
 Date: 2026-04-20
-Authors@R: c(person("Givenname", "Familyname", role = c("aut", "cre"),
-                    email = "yourfault@somewhere.net"),
-             person("Anotherone", "Ifany", role = "ctb"))
+Authors@R: c(
+    person("Dario", "Righelli", 
+        role=c("aut"), 
+        email="dario.righelli@gmail.com",
+        comment=c(ORCID="0000-0003-1504-3583")),
+    person("Artür", "Manukyan",
+        role=c("aut"),
+        email="artur-man@hotmail.com",
+        comment=c(ORCID="0000-0002-0441-9517")))
+Imports:
+    utils,
+    basilisk,
+    reticulate
+Suggests:
+    BiocStyle,
+    knitr,
+    testthat
 Description: More about what it does (maybe more than one line).
 License: What license is it under?
