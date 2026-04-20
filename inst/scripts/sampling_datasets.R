@@ -3,8 +3,11 @@ library(SpatialExperimentIO)
 library(SpatialExperiment)
 library(VisiumIO)
 
-# Oliveira Datasets:
+# stored data are in a Google Drive folder, you can download them from there:
+# https://drive.google.com/drive/folders/1BWWS4ThYFGXKwAGhmK_TurWVW-vs_8xU?usp=sharing
+path <- "~/Downloads/HackathonFoundationExData"
 
+# Oliveira Datasets:
 ## Xenium Human Colon
 id <- "Xenium_HumanColon_Oliveira"
 pa <- OSTA.data_load(id)
@@ -19,7 +22,6 @@ cellsamp <- sample(dim(spe)[2],100)
 spe1 <- spe[txsamp, cellsamp]
 
 (spe1)
-path <- "~/Downloads/HackathonFoundationExData"
 dir.create(path=path, recursive = TRUE)
 saveRDS(spe1, file=file.path(path, "Xenium_HumanColon_Oliveira_100tx_100cl.rds"))
 
