@@ -7,19 +7,12 @@ use_python(
   required = FALSE
 )
 
-# DOES NOT WORK NOW
 # get requirements
 req <- c(
   "setuptools==71.0.0",
-  "git+https://github.com/theislab/nicheformer.git"
-)
-
-# get requirements
-req <- c(
-  "setuptools==71.0.0",
-  "git+https://github.com/theislab/nicheformer.git"
+  "git+https://github.com/mahmoodlab/KRONOS.git"
 )
 
 # create and install virtual env
-virtualenv_create("nicheformer_env", python = ver)
-virtualenv_install("nicheformer_env", packages = "setuptools==71.0.0")
+virtualenv_create("kronos_env", python = ver)
+virtualenv_install("kronos_env", packages = req)
