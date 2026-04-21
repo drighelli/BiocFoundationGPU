@@ -2,9 +2,10 @@
 .scgpt <- BasiliskEnvironment(
   pkgname="BiocFoundationGPU", 
   envname="scgpt",
-  packages=c("python==3.12.0"),
+  packages=c("python==3.12.13"),
   pip= c("scgpt==0.2.4", 
-         "torch==2.2.0"))
+         "torch==2.2.0",
+         "ipython==9.12.0"))
 
 #' @importFrom basilisk BasiliskEnvironment
 .scfoundation <- BasiliskEnvironment(
