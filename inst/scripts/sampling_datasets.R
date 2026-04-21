@@ -63,3 +63,22 @@ spe1 <- spe[txsamp, cellsamp]
 
 saveRDS(spe1, file=file.path(path, "CosMx1k_MouseBrain1_100tx_100cl.rds"))
 
+
+# Janesick dataset (10x Genomics Xenium, Human Breast Cancer FFPE)
+
+# Reference: Janesick et al., Nature Communications, 2023
+# Original data:
+# https://www.10xgenomics.com/datasets/xenium-ffpe-human-breast-cancer-rep1
+#
+# A 2500x2500 pixel crop of the original dataset was generated using the
+# SpatialData Python package (spatialdata + spatialdata-io).
+# The crop is centered on the tissue and covers a representative region.
+#
+# Three files are provided:
+#   - crop_he_2500x2500.tif   : H&E image crop (RGB, 2500x2500 px)
+#   - crop_spatial.h5ad       : AnnData object with cell-by-gene expression
+#                               matrix and spatial coordinates (obsm[“spatial”])
+#   - crop_coords.json        : bounding box of the crop in the global
+#                               Xenium coordinate system
+#                               (x_min, y_min, x_max, y_max)
+
