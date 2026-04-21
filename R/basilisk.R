@@ -2,8 +2,9 @@
 .scgpt <- BasiliskEnvironment(
   pkgname="BiocFoundationGPU", 
   envname="scgpt",
-  packages=c("python==3.13.0"),
-  pip= c("scgpt==0.2.4"))
+  packages=c("python==3.12.0"),
+  pip= c("scgpt==0.2.4", 
+         "torch==2.2.0"))
 
 #' @importFrom basilisk BasiliskEnvironment
 .scfoundation <- BasiliskEnvironment(
@@ -18,3 +19,10 @@
   envname="novae",
   packages=c("python==3.13.0"),
   pip= c("novae==1.0.4"))
+
+#' @importFrom basilisk BasiliskEnvironment
+.nimbus <- BasiliskEnvironment(
+  pkgname="BiocFoundationGPU", 
+  envname="nimbus",
+  packages=c("python==3.10.0"),
+  pip= c("Nimbus-Inference==0.0.5"))
