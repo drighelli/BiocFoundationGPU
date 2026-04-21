@@ -10,9 +10,10 @@ use_python(
 # get requirements
 req <- c(
   "setuptools==71.0.0",
-  "git+https://github.com/mahmoodlab/KRONOS.git"
+  "git+https://github.com/prov-gigapath/prov-gigapath.git"
 )
 
 # create and install virtual env
-virtualenv_create("kronos_env", python = ver)
-virtualenv_install("kronos_env", packages = req)
+conda_create("gigapath_env", 
+             environment = system.file("scripts/venv_builds/environment.yml", 
+                                       package = "BiocFoundationGPU"))
