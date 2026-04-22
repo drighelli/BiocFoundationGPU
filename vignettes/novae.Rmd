@@ -56,7 +56,6 @@ Plotting spatial coordinates coloured by Novae's defined clusters (domains)
 ```{r plot_results}
 library(ggplot2)
 
-# extract spatial coords — stored in obsm["spatial"] or obs columns
 plot_df <- data.frame(
   x      = novae_data$obs$x_coord,
   y      = novae_data$obs$y_coord,
