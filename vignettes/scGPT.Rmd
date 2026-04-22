@@ -16,13 +16,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-`BiocFoundationGPU` provides an R interface to pre-trained foundation models
-for single-cell genomics. This vignette demonstrates how to use `Run_scGPT` to
+This vignette demonstrates how to use `Run_scGPT` to
 embed single-cell RNA-seq data using the
 scGPT model[@cui2024scgpt]. 
 
-scGPT can be used in many different context and strategies. See their official
-[github](https://github.com/bowang-lab/scGPT) repository. In particular, scGPT provides multiple possible pretrained models which are linked to in their [github README](https://github.com/bowang-lab/scGPT/blob/main/README.md). The models differ based on the training data used. The most common choice of model is the whole-human [`scGPT_human`](https://drive.google.com/drive/folders/1oWh_-ZRdhtoGQ2Fw24HP41FgLoomVo-y), which is trained 33 million normal human cells across a range of tissue types. Tissue-type specific models are available. There is also a "continual pretrained model", [`scGPT_CP`](https://drive.google.com/drive/folders/1_GROJTzXiAV8HB4imruOTk6PEGuNOcgB) that  inherits the pre-trained scGPT whole-human model, and was further supervised by extra cell type labels (using the Tabula Sapiens dataset). 
+scGPT is a foundation model for single-cell mRNA-Seq data. scGPT can be used in many different context and strategies (see their official
+[github](https://github.com/bowang-lab/scGPT) repository). In particular, scGPT provides multiple possible pretrained models which are linked to in their [github README](https://github.com/bowang-lab/scGPT/blob/main/README.md). The models differ based on the training data used. The most common choice of model is the whole-human [`scGPT_human`](https://drive.google.com/drive/folders/1oWh_-ZRdhtoGQ2Fw24HP41FgLoomVo-y), which is trained 33 million normal human cells across a range of tissue types. Tissue-type specific models are available. There is also a "continual pretrained model", [`scGPT_CP`](https://drive.google.com/drive/folders/1_GROJTzXiAV8HB4imruOTk6PEGuNOcgB) that  inherits the pre-trained scGPT whole-human model, and was further supervised by extra cell type labels (using the Tabula Sapiens dataset). 
 
 In `Run_scGPT` we run a basic ``zero-shot" embedding of the data, meaning that the input data is run through the pretrained model, and the output embeddings are returned. Depending on which model is used, this could correspond to the [zero-shot tutorials of scGPT](https://github.com/bowang-lab/scGPT/tree/main/tutorials/zero-shot). Those tutorials also provide strategies for how to use these to perform integration of datasets. 
 
@@ -32,7 +31,7 @@ scGPT also provides access to their model [huggingface model](https://huggingfac
 
 # Prerequisites
 
-`Run_scGPT` takes an `.h5ad` file and a pretrained scGPT model directory as
+`Run_scGPT` takes a `.h5ad` filename containing the cell transcripts data and a pretrained scGPT model directory as
 input, and returns a matrix of cell embeddings.
 
 ## Input data
