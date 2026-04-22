@@ -3,10 +3,10 @@
 #' This function runs novae.
 #' 
 #' @export
-Run_novae <- function(adata_path = NULL) {
+Run_novae <- function(adata_path = NULL, accelerator = "cuda") {
   proc <- basilisk::basiliskStart(.novae)
   on.exit(basilisk::basiliskStop(proc))
-  basilisk::basiliskRun(proc, function(adata_path) {
+  basilisk::basiliskRun(proc, function(adata_path, accelerator) {
     
     # libraries
     os    <- reticulate::import("os")
@@ -34,10 +34,10 @@ Run_novae <- function(adata_path = NULL) {
       n_valid_cells %/% 2L
     )
 
-    model$compute_representations(adata, zero_shot = TRUE, accelerator = "cuda", num_workers = 4L)
+    model$compute_representations(adata, zero_shot = TRUE, accelerator = accelerator, num_workers = 4L)
     model$assign_domains(adata)
     reticulate::py_to_r(adata)
-  }, adata_path = adata_path)
+  }, adata_path = adata_path, accelerator = accelerator)
 }
 
 #' Run_nimbus

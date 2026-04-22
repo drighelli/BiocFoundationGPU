@@ -47,6 +47,6 @@ adata$write_h5ad(
 Run Novae
 
 ```{r running_novae}
-novae_data <- Run_novae(tp)
+novae_data <- Run_novae(tp, accelerator = "cpu")
 novae_data$obsm$novae_latent |> head()
 ```
