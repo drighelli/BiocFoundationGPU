@@ -3,7 +3,7 @@ title: "Running Novae foundational model"
 author: ""
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 abstract: >
-This package takes an h5ad file with the gene coun matrix and spatial coordinates as input, run Novae creating the Python environment automatically, and returns an annDataR object with the embeddings and domains (spatial clusters).
+This package takes an h5ad file with the gene count matrix and spatial coordinates as input, run Novae creating the Python environment automatically, and returns an annDataR object with the embeddings and domains (spatial clusters).
   
 output:
   rmarkdown::html_document:
@@ -49,4 +49,23 @@ Run Novae
 ```{r running_novae}
 novae_data <- Run_novae(tp, accelerator = "cpu")
 novae_data$obsm$novae_latent |> head()
+```
+
+Plotting spatial coordinates coloured by Novae's defined clusters (domains)
+
+```{r plot_results}
+library(ggplot2)
+
+# extract spatial coords — stored in obsm["spatial"] or obs columns
+plot_df <- data.frame(
+  x      = novae_data$obs$x_coord,
+  y      = novae_data$obs$y_coord,
+  domain = as.factor(novae_data$obs$novae_domains_7)
+)
+
+ggplot(plot_df, aes(x = x, y = y, color = domain)) +
+  geom_point(size = 2, alpha = 0.8) +
+  coord_fixed() +
+  theme_classic() +
+  labs(x = "x", y = "y", color = "Novae domain")
 ```
