@@ -17,7 +17,12 @@ Run_scGPT <- function(h5ad_file, model_dir, gene_col, batch_size = 64L) {
   proc <- basilisk::basiliskStart(.scgpt)
   on.exit(basilisk::basiliskStop(proc))
   basilisk::basiliskRun(proc, function(h5ad_file, model_dir, gene_col, batch_size) {
-    reticulate::import("os")
+    os <- reticulate::import("os")
+    if (!reticulate::py_has_attr(os, "sched_getaffinity")) {
+      reticulate::py_run_string(
+        "import os; os.sched_getaffinity = lambda x: set(range(os.cpu_count()))"
+      )
+    }
     sg <- reticulate::import("scgpt")
     message("scGPT is loaded")
     # read data into an anndata
