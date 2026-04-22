@@ -12,15 +12,25 @@
 #' @details
 #' This function runs the `scg.tasks.embed_data` function
 #'
-#'
 #' @export
 Run_scGPT <- function(h5ad_file, model_dir, gene_col, batch_size = 64L) {
   proc <- basilisk::basiliskStart(.scgpt)
   on.exit(basilisk::basiliskStop(proc))
   basilisk::basiliskRun(proc, function(h5ad_file, model_dir, gene_col, batch_size) {
-    
-    # libraries
-    reticulate::import("os")
+    # macOS fix: os.sched_getaffinity is Linux-only; patch it if missing
+    os <- reticulate::import("os")
+    if (!reticulate::py_has_attr(os, "sched_getaffinity")) {
+      reticulate::py_run_string(
+        "import os; os.sched_getaffinity = lambda x: set(range(os.cpu_count()))"
+      )
+    }
+    # macOS fix: default multiprocessing start method is "spawn" on macOS, which
+    # cannot pickle locally-defined classes used by scGPT's DataLoader; force "fork"
+    mp <- reticulate::import("multiprocessing")
+    start_method <- mp$get_start_method(allow_none = TRUE)
+    if (is.null(start_method) || start_method != "fork") {
+      mp$set_start_method("fork", force = TRUE)
+    }
     sg <- reticulate::import("scgpt")
     sc <- reticulate::import("scanpy")
     
@@ -39,6 +49,7 @@ Run_scGPT <- function(h5ad_file, model_dir, gene_col, batch_size = 64L) {
     return(ref_embed_adata$obsm[["X_scGPT"]])
   }, h5ad_file = h5ad_file, model_dir = model_dir, gene_col = gene_col, batch_size = batch_size)
 }
+
 
 #' scfoundation
 #' 

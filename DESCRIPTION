@@ -4,14 +4,14 @@ Title: This package allows deploying a set of pre-defined foundation models for 
 Version: 1.0
 Date: 2026-04-20
 Authors@R: c(
-    person("Dario", "Righelli", 
-        role=c("cre", "aut"), 
-        email="dario.righelli@gmail.com",
-        comment=c(ORCID="0000-0003-1504-3583")),
     person("Artür", "Manukyan",
-        role=c("aut"),
+        role=c("cre", "aut"),
         email="artur-man@hotmail.com",
-        comment=c(ORCID="0000-0002-0441-9517")))
+        comment=c(ORCID="0000-0002-0441-9517")),
+    person("Dario", "Righelli", 
+        role=c("aut"), 
+        email="dario.righelli@gmail.com",
+        comment=c(ORCID="0000-0003-1504-3583")))
 Imports:
     utils,
     basilisk,
