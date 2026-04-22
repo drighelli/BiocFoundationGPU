@@ -17,11 +17,13 @@ Imports:
     basilisk,
     reticulate,
     SpatialExperiment,
-    anndataR
+    anndataR,
+    rhdf5
 Suggests:
     BiocStyle,
     knitr,
     testthat
+biocViews:
 Description: More about what it does (maybe more than one line).
 License: What license is it under?
 RoxygenNote: 7.3.3
