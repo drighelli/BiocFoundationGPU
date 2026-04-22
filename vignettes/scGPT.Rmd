@@ -1,0 +1,82 @@
+---
+title: "Running scGPT with BiocFoundationGPU"
+package: BiocFoundationGPU
+output:
+  BiocStyle::html_document
+bibliography: foundation.bib
+vignette: >
+  %\VignetteIndexEntry{Running scGPT with BiocFoundationGPU}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+`BiocFoundationGPU` provides an R interface to pre-trained foundation models
+for single-cell genomics. This vignette demonstrates how to use `Run_scGPT` to
+embed single-cell RNA-seq data using the
+scGPT model[@cui_scgpt_2024]. 
+
+scGPT can be used in many different context and strategies. See their official
+[github](https://github.com/bowang-lab/scGPT) repository. In particular, scGPT provides multiple possible pretrained models which are linked to in their [github README](https://github.com/bowang-lab/scGPT/blob/main/README.md). The models differ based on the training data used. The most common choice of model is the whole-human [`scGPT_human`](https://drive.google.com/drive/folders/1oWh_-ZRdhtoGQ2Fw24HP41FgLoomVo-y), which is trained 33 million normal human cells across a range of tissue types. Tissue-type specific models are available. There is also a "continual pretrained model", [`scGPT_CP`](https://drive.google.com/drive/folders/1_GROJTzXiAV8HB4imruOTk6PEGuNOcgB) that  inherits the pre-trained scGPT whole-human model, and was further supervised by extra cell type labels (using the Tabula Sapiens dataset). 
+
+In `Run_scGPT` we run a basic ``zero-shot" embedding of the data, meaning that the input data is run through the pretrained model, and the output embeddings are returned. Depending on which model is used, this could correspond to the [zero-shot tutorials of scGPT](https://github.com/bowang-lab/scGPT/tree/main/tutorials/zero-shot). Those tutorials also provide strategies for how to use these to perform integration of datasets. 
+
+## Huggingface
+
+scGPT also provides access to their model [huggingface model](https://huggingface.co/tdc/scGPT). We do not currently provide implementation of this model, since scGPT offers many more models than just that available on huggingface. We have focused on an implementation that allows users the ability to work with and compare these many different models.  However, this means users must download the models and store them in a local directory for `Run_scGPT`. 
+
+# Prerequisites
+
+`Run_scGPT` takes an `.h5ad` file and a pretrained scGPT model directory as
+input, and returns a matrix of cell embeddings.
+
+## Input data
+
+The input `.h5ad` file used in this vignette is the example data provided by scGPT (batch_covid_subsampled_train.h5ad )[https://github.com/bowang-lab/scGPT/blob/main/tutorials/zero-shot/Tutorial_ZeroShot_Reference_Mapping.ipynb], but we have subsetted to the first 100 cells so that it will run instantaneously even on a CPU. The subsetted 100 cells can be downloaded from:
+<https://drive.google.com/file/d/1Do7CXaaSTwEySGWHMKAkpN5G_g-OY8y2/view?usp=drive_link>
+
+## Model weights
+
+The pretrained scGPT model directory that we use is `scGPT_human` model which can be downloaded from:
+<https://drive.google.com/drive/folders/1oWh_-ZRdhtoGQ2Fw24HP41FgLoomVo-y>
+
+The model directory should contain a `.pt` file with the model weights, along
+with `vocab.json` and `args.json`.
+
+# Running scGPT
+
+Set the paths to the input data and model directory:
+
+```{r paths, eval=FALSE}
+dir <- "/path/to/Hackathon/"
+h5ad_file <- file.path(dir, "scHuman_covid/batch_covid_subsampled_test_100cells.h5ad")
+model_dir  <- file.path(dir, "scGPT_model")
+```
+
+Run `Run_scGPT` to embed the cells. The result is a matrix with one row per
+cell and one column per embedding dimension:
+
+```{r run, eval=FALSE}
+library(BiocFoundationGPU)
+
+result <- Run_scGPT(
+    h5ad_file = h5ad_file,
+    model_dir  = model_dir,
+    gene_col   = "gene_name"
+)
+```
+
+
+# Session Info
+
+```{r sessionInfo}
+sessionInfo()
+```
+
+# References
+
