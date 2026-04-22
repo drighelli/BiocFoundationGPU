@@ -13,7 +13,7 @@ Authors@R: c(
         email="dario.righelli@gmail.com",
         comment=c(ORCID="0000-0003-1504-3583")),
     person("Juan", "Henao",
-        role=c("cre", "aut"),
+        role=c("aut"),
         email="juanhenao.sanchez@gmail.com",
         comment=c(ORCID="0000-0003-0783-1432")),
     person("Ilaria", "Billato",
