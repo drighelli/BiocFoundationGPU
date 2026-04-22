@@ -22,6 +22,6 @@ test_that("test novae", {
   )
   
   # run novae
-  novae_data <- Run_novae(tp)
+  novae_data <- Run_novae(tp, accelerator = "cpu")
   novae_data$obsm$novae_latent |> head()
 })

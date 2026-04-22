@@ -3,7 +3,7 @@
 #' This function runs novae.
 #' 
 #' @export
-Run_novae <- function(adata_path = NULL, accelerator = "cuda") {
+Run_novae <- function(adata_path = NULL, accelerator = "cpu") {
   proc <- basilisk::basiliskStart(.novae)
   on.exit(basilisk::basiliskStop(proc))
   basilisk::basiliskRun(proc, function(adata_path, accelerator) {
@@ -13,7 +13,7 @@ Run_novae <- function(adata_path = NULL, accelerator = "cuda") {
     os$environ[["HF_HOME"]]      <- ".cache/huggingface"
     os$environ[["MPLCONFIGDIR"]] <- ".cache/matplotlib"
     novae <- reticulate::import("novae")
-    ad    <- reticulate::import("anndata")
+    ad <- reticulate::import("anndata")
     np <- reticulate::import("numpy")
     sp <- reticulate::import("scipy")
     
