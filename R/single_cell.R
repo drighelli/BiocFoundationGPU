@@ -1,6 +1,7 @@
 #' scGPT
 #' 
-#' This package runs scGPT.
+#' This function runs scGPT.
+#' 
 #' @param h5ad_file file that points to the location of a h5ad file with the
 #'   count data
 #' @param model_dir directory with the model. This should be a directory that
@@ -17,19 +18,24 @@ Run_scGPT <- function(h5ad_file, model_dir, gene_col, batch_size = 64L) {
   proc <- basilisk::basiliskStart(.scgpt)
   on.exit(basilisk::basiliskStop(proc))
   basilisk::basiliskRun(proc, function(h5ad_file, model_dir, gene_col, batch_size) {
+    
+    # libraries
     reticulate::import("os")
     sg <- reticulate::import("scgpt")
-    message("scGPT is loaded")
-    # read data into an anndata
     sc <- reticulate::import("scanpy")
+    
+    # read data into an anndata
     adata <- sc$read_h5ad(h5ad_file)
     
+    # run scgpt
     ref_embed_adata <- sg$tasks$embed_data(
       adata,
       model_dir,
       gene_col = gene_col,
       batch_size = as.integer(batch_size)
     )
+    
+    # return embedding
     return(ref_embed_adata$obsm[["X_scGPT"]])
   }, h5ad_file = h5ad_file, model_dir = model_dir, gene_col = gene_col, batch_size = batch_size)
 }

@@ -4,8 +4,8 @@
 \alias{Run_novae}
 \title{Run_novae}
 \usage{
-Run_novae()
+Run_novae(adata_path = NULL)
 }
 \description{
-This function runs Novae
+This function runs novae.
 }

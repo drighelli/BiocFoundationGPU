@@ -15,7 +15,9 @@ Authors@R: c(
 Imports:
     utils,
     basilisk,
-    reticulate
+    reticulate,
+    SpatialExperiment,
+    anndataR
 Suggests:
     BiocStyle,
     knitr,
