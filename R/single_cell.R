@@ -51,19 +51,3 @@ Run_scGPT <- function(h5ad_file, model_dir, gene_col, batch_size = 64L) {
     return(ref_embed_adata$obsm[["X_scGPT"]])
   }, h5ad_file = h5ad_file, model_dir = model_dir, gene_col = gene_col, batch_size = batch_size)
 }
-
-
-#' scfoundation
-#' 
-#' This package runs scfoundation
-#' 
-#' @export
-Run_scfoundation <- function() {
-  proc <- basilisk::basiliskStart(.scfoundation)
-  on.exit(basilisk::basiliskStop(proc))
-  basilisk::basiliskRun(proc, function() {
-    sg <- reticulate::import("scfoundation")
-    message("scfoundation is loaded")
-    return(TRUE)
-  })
-}

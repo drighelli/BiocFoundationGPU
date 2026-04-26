@@ -3,5 +3,4 @@
 export(Run_nimbus)
 export(Run_novae)
 export(Run_scGPT)
-export(Run_scfoundation)
 importFrom(basilisk,BasiliskEnvironment)

@@ -9,13 +9,6 @@
          "numpy==1.26.4"))
 
 #' @importFrom basilisk BasiliskEnvironment
-.scfoundation <- BasiliskEnvironment(
-  pkgname="BiocFoundationGPU", 
-  envname="scfoundation",
-  packages=c("python==3.7.1"),
-  pip= c("scfoundation==0.0.1"))
-
-#' @importFrom basilisk BasiliskEnvironment
 .novae <- BasiliskEnvironment(
   pkgname="BiocFoundationGPU", 
   envname="novae",
