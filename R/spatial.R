@@ -1,3 +1,8 @@
+#' @importFrom basilisk setBasiliskCheckVersions
+.onLoad <- function(libname, pkgname) {
+  setBasiliskCheckVersions(FALSE)
+}
+
 #' Run_novae
 #' 
 #' This function runs novae.
@@ -55,4 +60,9 @@ Run_nimbus <- function() {
   })
 }
   
-  
+#' @importFrom basilisk BasiliskEnvironment
+.nicheformer <- BasiliskEnvironment(
+  pkgname="BiocFoundationGPU", 
+  envname="nicheformer",
+  packages=c("python==3.10.0"),
+  pip= c("git+https://github.com/theislab/nicheformer.git@485cadbc5caa15119adfd54228f8a8af835fcabc"))
