@@ -27,7 +27,10 @@ library(SpatialExperiment)
 Preparing the annDataR object
 
 ```{r annDataR_creation}
-spe <- readRDS("/workspaces/project/data/CosMx1k_MouseBrain1_100tx_100cl.rds") 
+spe <- readRDS(
+  system.file("extdata", "CosMx1k_MouseBrain1_100tx_100cl.rds", package = "BiocFoundationGPU")
+)
+
 spatialCoords(spe) |> as.data.frame() -> coords_df
 colData(spe)$x_coord <- coords_df[, 1]
 colData(spe)$y_coord <- coords_df[, 2]
