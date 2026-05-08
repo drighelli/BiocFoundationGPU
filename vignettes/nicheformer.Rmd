@@ -82,8 +82,12 @@ rownames(adata$var) <- new_names[keep]
 Generating the `h5ad` file and running `Nicheformer` in R
 
 ```{r running_nicheformer}
-adata$write_h5ad("/workspaces/project/data/spe_converted.h5ad", mode = "w")
-nicheformer_data <- Run_nicheformer(adata_path = "/workspaces/project/data/spe_converted.h5ad",
+# write anndata to tempfile 
+adata$write_h5ad(
+  tp <- tempfile(fileext = ".h5ad"), 
+  mode = "w"
+)
+nicheformer_data <- Run_nicheformer(adata_path = tp,
                                   technology = "cosmx")
 ```
 
@@ -93,8 +97,8 @@ Downstream analysis using the embeddings to calculate clusters using a graph-bas
 library(ggplot2)
 library(uwot)
 library(bluster)
-library(cluster)      # silhouette, clusGap
-library(patchwork)    # side-by-side plots
+library(cluster)     
+library(patchwork)
 library(dplyr)
 
 set.seed(1234)
