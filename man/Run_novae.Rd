@@ -4,7 +4,7 @@
 \alias{Run_novae}
 \title{Run_novae}
 \usage{
-Run_novae(adata_path = NULL)
+Run_novae(adata_path = NULL, accelerator = "cpu")
 }
 \description{
 This function runs novae.

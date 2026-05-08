@@ -1,4 +1,4 @@
-## BiocFoundationGPU
+## fomo
 
 This package allows deploying a set of pre-defined foundation models for various tasks in R. It provides an interface to easily access and utilize these models using:
 
