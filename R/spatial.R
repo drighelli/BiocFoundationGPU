@@ -73,7 +73,7 @@ Run_nicheformer <- function(adata_path = NULL,
   technology_mean_path <- system.file(
     "extdata", "model_means",
     paste0(technology, "_mean_script.npy"),
-    package = "fomo"
+    package = "BiocFoundationGPU"
   )
   if (!nzchar(technology_mean_path)) {
     stop("No model mean file found for technology: ", technology)
