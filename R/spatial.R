@@ -66,13 +66,20 @@ Run_nimbus <- function() {
 #' @param adata_path Path to the input anndata file.
 #' @param technology Technology used for the spatial transcriptomics data. One of "cosmx", "visium", "xenium", "merfish", "iss", or "dissociated".
 #' @param device torch device ("cpu", "cuda", "mps" etc.)
+#' @param context_length maximum sequence length (number of token positions), used to size the positional embedding. 
+#' @param batch_size integer for size of 
+#' @param batch_size number of cells processed per forward pass.
+#' @param cast_model cast from float32 to float16 to accelerate calculations
 #' 
 #' @importFrom reticulate py_get_attr
 #' 
 #' @export
 Run_nicheformer <- function(adata_path = NULL,
                             technology = c("cosmx", "visium", "xenium", "merfish", "iss", "dissociated"), 
-                            device = "cpu") {
+                            device = "cpu",
+                            context_length = 1500L,
+                            batch_size = 8L,
+                            cast_model = FALSE) {
   technology <- match.arg(technology)
   
   technology_mean_path <- system.file(
@@ -124,7 +131,7 @@ Run_nicheformer <- function(adata_path = NULL,
     torch$cuda$empty_cache()
     
     # half() and to() return self, so chaining works
-    if (torch$cuda$is_available()) {
+    if (torch$cuda$is_available() && cast_model) {
       model <- model$half()$to(device)
     } else {
       model <- model$to(device)
@@ -136,7 +143,7 @@ Run_nicheformer <- function(adata_path = NULL,
     inputs <- tokenizer(adata)
     
     # Truncate to max_len. Python's tensor[:, :max_len] becomes narrow(dim, start, length).
-    max_len <- 653L                                     # 650 + 3
+    max_len <- context_length                                     # 650 + 3
     input_ids      <- inputs[["input_ids"]]$narrow(1L, 0L, max_len)
     attention_mask <- inputs[["attention_mask"]]$narrow(1L, 0L, max_len)
     
@@ -144,7 +151,7 @@ Run_nicheformer <- function(adata_path = NULL,
     model$nicheformer$pos <- model$nicheformer$pos$narrow(0L, 0L, max_len)
     
     # Batch processing
-    batch_size     <- 64L
+    batch_size     <- batch_size
     n_samples      <- input_ids$size(0L)                # safer than $shape[[...]]
     all_embeddings <- list()
     
@@ -160,7 +167,7 @@ Run_nicheformer <- function(adata_path = NULL,
           input_ids       = batch_ids,
           attention_mask  = batch_mask,
           layer           = -1L,
-          with_context    = TRUE
+          with_context    = FALSE
         )
         all_embeddings[[length(all_embeddings) + 1L]] <- emb$cpu()
         torch$cuda$empty_cache()
