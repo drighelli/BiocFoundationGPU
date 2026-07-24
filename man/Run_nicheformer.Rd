@@ -7,7 +7,10 @@
 Run_nicheformer(
   adata_path = NULL,
   technology = c("cosmx", "visium", "xenium", "merfish", "iss", "dissociated"),
-  device = "cpu"
+  device = "cpu",
+  context_length = 1500L,
+  batch_size = 8L,
+  cast_model = FALSE
 )
 }
 \arguments{
@@ -16,6 +19,12 @@ Run_nicheformer(
 \item{technology}{Technology used for the spatial transcriptomics data. One of "cosmx", "visium", "xenium", "merfish", "iss", or "dissociated".}
 
 \item{device}{torch device ("cpu", "cuda", "mps" etc.)}
+
+\item{context_length}{maximum sequence length (number of token positions), used to size the positional embedding.}
+
+\item{batch_size}{number of cells processed per forward pass.}
+
+\item{cast_model}{cast from float32 to float16 to accelerate calculations}
 }
 \description{
 This functions runs NicheFormer.
